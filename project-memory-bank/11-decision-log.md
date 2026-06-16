@@ -15,5 +15,8 @@
 
 ## AD-002 — Technology stack
 - **Date:** 2026-06-16
-- **Status:** **Open**
-- **Context:** Must satisfy AD-001 (offline-first) and the design goals (calm, fast, premium — Linear/Raycast/Notion/Vercel). To be resolved in `04-system-architecture.md`.
+- **Status:** **Accepted** (reversible)
+- **Decision:** Local-first **PWA** — TypeScript + Vite + React (SPA), Tailwind CSS, Zustand, Dexie/IndexedDB as on-device source of truth, Service Worker for offline shell. AI Coach via Claude API (online-only, additive). Optional Tauri desktop wrapper later (same codebase).
+- **Rationale:** Satisfies AD-001 natively, lowest build/deploy friction, cross-device, premium SPA feel, no backend needed on day one.
+- **Reversibility:** If true offline AI is later required, revisit with a small local model. Out of scope now.
+- **Detail:** see `04-system-architecture.md`.

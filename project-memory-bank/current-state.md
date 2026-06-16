@@ -3,29 +3,30 @@
 > Always read this file first. Update it after every meaningful change.
 
 ## Current Phase
-Phase 0 — Foundation
+Phase 0 — Foundation — **COMPLETE** (awaiting approval to start Phase 1)
 
 ## Current Sprint
-Phase 0.1 — Bootstrap Memory Bank spine
+None active. Next: Phase 1 — Core Daily Workflow (pending approval).
 
 ## Completed Features
-- (none yet)
+- Memory Bank scaffolding (full structure + `current-state.md`).
+- Phase 0 foundation docs: Product Vision (`01`), User Personas (`02`), System Architecture (`04`), Design System (`06`).
 
 ## In Progress Features
-- Memory Bank scaffolding (this commit): `current-state.md` populated, remaining files stubbed and awaiting content + approval.
+- (none)
 
 ## Pending Features
-- Phase 0: Product Vision, System Architecture, Design System
-- Phase 1+: see `10-phase-roadmap.md`
+- Phase 1: Auth, Daily Session, Problem Framing, Decision Journal
+- Phase 2+: see `10-phase-roadmap.md`
 
 ## Architecture Decisions
 | ID | Decision | Status |
 |----|----------|--------|
-| AD-001 | **Offline-first.** The app must be fully usable without a network. Thinking data is stored locally on the device; cloud sync (if any) is additive, never required. The AI Coach requires connectivity and must degrade gracefully when offline. | Accepted (founder, 2026-06-16) |
-| AD-002 | Technology stack (framework, local store, packaging: PWA vs Tauri/Electron, AI provider) | **Open** — to decide in `04-system-architecture.md` |
+| AD-001 | **Offline-first.** Local store is source of truth; app fully usable with no network; AI Coach is additive/online-only and degrades gracefully. | Accepted |
+| AD-002 | **Stack:** Local-first PWA — TS + Vite + React, Tailwind, Zustand, Dexie/IndexedDB, Service Worker; Claude API for AI Coach (online-only). | Accepted (reversible) |
 
 ## Known Risks
-- R-001: Offline-first + AI Coach creates a hard boundary — AI features can't run offline. Needs graceful-degradation design. (see `12-risk-register.md`)
+- R-001: Offline-first + online AI Coach boundary → AI features unavailable offline. Mitigation: AI additive, queued, never blocks core workflows. (see `12-risk-register.md`)
 
 ## Known Bugs
 - (none — no code yet)
@@ -34,8 +35,7 @@ Phase 0.1 — Bootstrap Memory Bank spine
 - (none yet)
 
 ## Next Recommended Task
-Review this spine. On approval, draft Phase 0 content in order:
-`01-product-vision.md` → `02-user-personas.md` → `04-system-architecture.md` (resolve AD-002, design for offline) → `06-design-system.md`.
+Begin **Phase 1 — Core Daily Workflow**, starting with project scaffolding (Vite + React + TS + Tailwind + Dexie PWA shell) and the Today's Thinking Session screen. Define domain model (`05`) + DB schema (`architecture/database-schema.md`) first.
 
 ## Last Updated
 2026-06-16
