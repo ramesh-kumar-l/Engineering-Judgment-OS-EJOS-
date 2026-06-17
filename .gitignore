@@ -1,0 +1,13 @@
+node_modules
+dist
+dist-ssr
+*.local
+.DS_Store
+
+# Vite PWA generated
+dev-dist
+
+# Logs
+npm-debug.log*
+logs
+*.log

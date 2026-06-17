@@ -2,6 +2,13 @@
 
 > Append-only record of significant decisions. Newest first.
 
+## AD-003 — "Authentication" deferred (no cloud accounts in v1)
+- **Date:** 2026-06-16
+- **Status:** Accepted (reversible)
+- **Decision:** Phase 1 ships with **no authentication and no accounts.** This follows directly from AD-001: the app is single-device and local-first, so cloud auth would contradict offline-first and add friction for zero v1 benefit. An *optional local app lock (passcode)* may be added later; it is off by default and not required for use.
+- **Why this differs from the system prompt:** the master prompt lists "Authentication" as a Phase 1 deliverable, but that assumes a server/multi-user model. Flagged to founder; revisit if cloud sync/accounts are ever wanted.
+
+
 ## AD-001 — Offline-first architecture
 - **Date:** 2026-06-16
 - **Decided by:** Founder

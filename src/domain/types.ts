@@ -1,0 +1,57 @@
+// Domain model for EJOS. Pure types — no I/O, no storage concerns.
+// See project-memory-bank/05-domain-model.md
+
+export type ISODate = string; // 'YYYY-MM-DD'
+export type Timestamp = number; // epoch ms
+
+/** A daily thinking session. The center of the experience. */
+export interface Session {
+  id: string;
+  date: ISODate; // one primary session per calendar day
+  problemStatement: string; // answer to "What problem are you thinking about today?"
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
+/** Problem Framing artifact. Outputs: assumptions, stakeholders, root-cause notes. */
+export interface Problem {
+  id: string;
+  sessionId?: string; // optional link to the day's session
+  title: string;
+  statement: string;
+  assumptions: string[];
+  stakeholders: string[];
+  rootCauseNotes: string;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
+export type Confidence = 'low' | 'medium' | 'high';
+export type DecisionStatus = 'open' | 'reviewed';
+
+/** Decision Record. Reasoning + confidence now; outcome reviewed later. */
+export interface Decision {
+  id: string;
+  sessionId?: string;
+  title: string;
+  context: string;
+  options: string[];
+  chosenOption: string;
+  reasoning: string;
+  confidence: Confidence;
+  expectedOutcome: string;
+  // Filled in during a later outcome review (Phase 1 captures the fields; review UI lands later).
+  actualOutcome: string;
+  status: DecisionStatus;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
+export const todayISO = (): ISODate => {
+  const d = new Date();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${d.getFullYear()}-${m}-${day}`;
+};
+
+export const newId = (): string => crypto.randomUUID();
