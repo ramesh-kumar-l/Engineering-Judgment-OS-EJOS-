@@ -1,7 +1,7 @@
 // Local-first data layer (AD-001). IndexedDB via Dexie is the SOURCE OF TRUTH.
 // All writes are local and never depend on the network.
 import Dexie, { type EntityTable } from 'dexie';
-import type { Session, Problem, Decision, SystemMap, Coaching, Experiment } from '@/domain/types';
+import type { Session, Problem, Decision, SystemMap, Coaching, Experiment, Review } from '@/domain/types';
 import type { AISettings } from '@/ai/types';
 
 const db = new Dexie('ejos') as Dexie & {
@@ -12,6 +12,7 @@ const db = new Dexie('ejos') as Dexie & {
   coachings: EntityTable<Coaching, 'id'>;
   settings: EntityTable<AISettings, 'id'>;
   experiments: EntityTable<Experiment, 'id'>;
+  reviews: EntityTable<Review, 'id'>;
 };
 
 db.version(1).stores({
@@ -34,6 +35,11 @@ db.version(3).stores({
 // v4 (Phase 4): add Innovation Lab experiments. Existing stores carry forward.
 db.version(4).stores({
   experiments: 'id, sessionId, updatedAt',
+});
+
+// v5 (Phase 5): add Weekly Reviews. Existing stores carry forward unchanged.
+db.version(5).stores({
+  reviews: 'id, rangeStart, updatedAt',
 });
 
 export { db };

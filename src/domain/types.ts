@@ -118,12 +118,27 @@ export interface Experiment {
   updatedAt: Timestamp;
 }
 
+// ---- Phase 5: Weekly Review ----
+
+/** A weekly reflection. One row per week (id = the week's start date). The
+ *  patterns themselves are recomputed live from artifacts; this stores the
+ *  founder's durable reflection — the growth-tracking record over time. */
+export interface Review {
+  id: string; // = rangeStart (one review per week)
+  rangeStart: ISODate; // inclusive — Monday of the week
+  rangeEnd: ISODate; // exclusive — the next Monday
+  notes: string; // what stood out this week
+  insight: string; // what I'm carrying into next week
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
 // ---- Phase 3: AI Coach ----
 
 /** The latest coaching note generated for one artifact (one row per artifact). */
 export interface Coaching {
   id: string; // = the coached artifact's id
-  targetKind: 'problem' | 'decision' | 'systemMap' | 'experiment';
+  targetKind: 'problem' | 'decision' | 'systemMap' | 'experiment' | 'review';
   content: string; // the coach's response (markdown-ish text)
   provider: string; // which provider produced it (claude | gemini | ollama)
   model: string;

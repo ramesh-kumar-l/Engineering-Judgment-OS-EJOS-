@@ -4,10 +4,10 @@
 > (This is the project's "active-context" / save-state file.)
 
 ## Current Phase
-Phase 4 — Innovation Lab — **COMPLETE** (awaiting approval to start Phase 5)
+Phase 5 — Weekly Review — **COMPLETE** (awaiting approval to start Phase 6)
 
 ## Current Sprint
-None active. Next: Phase 5 — Weekly Review (pending approval).
+None active. Next: Phase 6 — Cognitive Repository (pending approval).
 
 ## Completed Features
 - **Phase 0:** Vision (`01`), Personas (`02`), Architecture (`04`), Design System (`06`).
@@ -35,12 +35,16 @@ None active. Next: Phase 5 — Weekly Review (pending approval).
   - Innovation Lab (`/lab`) — master/detail over experiments (mirrors Systems workspace).
   - Three lenses via a non-destructive technique toggle: **Challenge assumptions** (assumption/challenge pairs), **First principles** (fundamental truths → reconstruction), **Redesign** (constraints to drop → reimagined). Shared Subject + Insight fields.
   - `CoachPanel` reused (coach `targetKind` extended to `experiment`) — coach pushes past the status quo, never grades.
+- **Phase 5 — Weekly Review:**
+  - `Review` entity + Dexie **v5** store (`reviews`, one row per week, lazily created).
+  - Weekly Review (`/review`) — week stepper, locally-computed patterns, reflection editor.
+  - Pattern detection (`src/review/patterns.ts`, pure/offline, **no scores**): per-type counts vs prior week, confidence mix, recurring themes, `ReviewPattern[]` (volume trend, open prediction loops, confidence skew, single-lens, recurring threads, quiet week).
+  - `PatternList` presentational view; `CoachPanel` reused (`targetKind` → `review`) over a `summaryText` digest — spots cross-week patterns, never grades.
 
 ## In Progress Features
 - (none)
 
 ## Pending Features
-- Phase 5: Weekly Review (pattern detection, insights, growth tracking).
 - Phase 6: Cognitive Repository (search, connections, thinking graph).
 - See `10-phase-roadmap.md`.
 
@@ -68,7 +72,7 @@ None active. Next: Phase 5 — Weekly Review (pending approval).
 - AI Coach responses are not streamed (awaits full completion) — simpler/stable for v1.
 
 ## Next Recommended Task
-Founder smoke-test (`npm run dev`): open **Innovation Lab** → new experiment → cycle the three lenses → **Get coaching**. (AI setup as in Phase 3: Settings → provider → Test connection.) On approval, begin **Phase 5 — Weekly Review**.
+Founder smoke-test (`npm run dev`): open **Weekly Review** → confirm count tiles + patterns reflect this week's artifacts → write a reflection → **Get coaching** → step to a prior week. On approval, begin **Phase 6 — Cognitive Repository**.
 
 ## Last Updated
-2026-06-17 (Phase 4)
+2026-06-17 (Phase 5)

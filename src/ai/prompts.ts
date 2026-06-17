@@ -1,13 +1,22 @@
 import type { Problem, Decision, SystemMap, Experiment } from '@/domain/types';
 import type { ChatMessage } from './types';
 
-export type CoachKind = 'problem' | 'decision' | 'systemMap' | 'experiment';
+export type CoachKind = 'problem' | 'decision' | 'systemMap' | 'experiment' | 'review';
+
+/** What the weekly-review coach sees: a computed digest plus the founder's notes. */
+export interface ReviewDigest {
+  id: string;
+  summary: string;
+  notes: string;
+  insight: string;
+}
 
 export type CoachTarget =
   | { kind: 'problem'; data: Problem }
   | { kind: 'decision'; data: Decision }
   | { kind: 'systemMap'; data: SystemMap }
-  | { kind: 'experiment'; data: Experiment };
+  | { kind: 'experiment'; data: Experiment }
+  | { kind: 'review'; data: ReviewDigest };
 
 // The coaching philosophy. EJOS coaches judgment — it never grades or scores.
 const COACH_SYSTEM = `You are an engineering judgment coach inside EJOS, a tool that helps engineers think better.
@@ -88,6 +97,16 @@ function experimentUser(e: Experiment): string {
   ].join('\n\n');
 }
 
+function reviewUser(r: ReviewDigest): string {
+  return [
+    `Coach me on my WEEKLY REVIEW of my own engineering thinking. Help me see patterns across the week I might be missing, and ask what's most worth changing next week. Don't summarize back to me — push on what the digest implies.`,
+    `Digest of what I worked on this week:`,
+    r.summary || '(no activity detected this week)',
+    `What stood out to me: ${r.notes || '(nothing written yet)'}`,
+    `What I think I'm carrying forward: ${r.insight || '(nothing written yet)'}`,
+  ].join('\n\n');
+}
+
 export function buildCoachingMessages(target: CoachTarget): ChatMessage[] {
   const user =
     target.kind === 'problem'
@@ -96,7 +115,9 @@ export function buildCoachingMessages(target: CoachTarget): ChatMessage[] {
         ? decisionUser(target.data)
         : target.kind === 'systemMap'
           ? systemMapUser(target.data)
-          : experimentUser(target.data);
+          : target.kind === 'review'
+            ? reviewUser(target.data)
+            : experimentUser(target.data);
   return [
     { role: 'system', content: COACH_SYSTEM },
     { role: 'user', content: user },

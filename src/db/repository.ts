@@ -8,6 +8,7 @@ import {
   type SystemMap,
   type Coaching,
   type Experiment,
+  type Review,
   newId,
   todayISO,
 } from '@/domain/types';
@@ -147,6 +148,14 @@ export async function saveExperiment(experiment: Experiment): Promise<void> {
 
 export async function deleteExperiment(id: string): Promise<void> {
   await db.experiments.delete(id);
+}
+
+// ---- Weekly Reviews (Phase 5) ----
+// A review is keyed by its week start, so there is exactly one per week.
+// Created lazily on first edit (saveReview is an upsert) — merely browsing a
+// week does not write a row.
+export async function saveReview(review: Review): Promise<void> {
+  await db.reviews.put({ ...review, updatedAt: now() });
 }
 
 // ---- AI settings (Phase 3) ----

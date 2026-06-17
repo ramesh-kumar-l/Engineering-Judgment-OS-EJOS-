@@ -67,7 +67,7 @@ Implemented in `src/domain/types.ts` (pure types, no I/O).
 ### AISettings — provider config (single row, id='ai'); see `src/ai/types.ts`
 Stores `provider` (claude \| gemini \| ollama), per-provider API keys + model names, and Ollama base URL. Stored locally only.
 
-> `Coaching.targetKind` now also accepts `'experiment'` (Phase 4).
+> `Coaching.targetKind` now also accepts `'experiment'` (Phase 4) and `'review'` (Phase 5).
 
 ## Innovation Lab Entities (Phase 4)
 ### Experiment — a status-quo-challenging experiment run through one lens
@@ -87,8 +87,21 @@ Stores `provider` (claude \| gemini \| ollama), per-provider API keys + model na
 
 The technique toggle is non-destructive: switching lenses hides but never deletes the other sections' data. **No numeric scoring** anywhere.
 
+## Weekly Review Entities (Phase 5)
+### Review — a weekly reflection (one row per week)
+| Field | Type | Notes |
+|-------|------|-------|
+| id | string | = `rangeStart` (one review per week) |
+| rangeStart | ISODate | inclusive — Monday of the week |
+| rangeEnd | ISODate | exclusive — the next Monday |
+| notes | string | what stood out this week |
+| insight | string | what I'm carrying into next week |
+| createdAt / updatedAt | epoch ms | |
+
+Created **lazily** on first edit. Patterns are **recomputed live** from artifacts (`src/review/patterns.ts`, pure) — not stored — so a `Review` holds only the founder's durable reflection. **No numeric scoring** (counts + confidence mix are descriptive only).
+
 ## Future Entities (later phases)
-- `Review` (Phase 5), `Insight` (cross-artifact, Phase 5).
+- `Insight` / connection edges (cross-artifact thinking graph, Phase 6).
 
 ## Relationships
 - A `Session` loosely groups the `Problem`s and `Decision`s created that day (via `sessionId`). Artifacts also stand alone in their own lists.

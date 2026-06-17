@@ -42,3 +42,12 @@
   - Wired route `/lab` + nav "Innovation Lab".
   - Validation: `npm run build` passes (tsc strict + vite, 49 modules); SW precaches 5 entries (426 KiB); `npm run preview` → HTTP 200.
   - **Phase 4: COMPLETE.** Stopped for approval. Pending: founder browser smoke-test.
+- **Phase 5 — Weekly Review:**
+  - Domain: added `Review` entity (`src/domain/types.ts`); extended `Coaching.targetKind` with `review`.
+  - Data: Dexie **v5** migration adds `reviews` store (`id=rangeStart`); repository `saveReview` (upsert, lazily created on first edit).
+  - Detection (pure, offline, **no scores**): `src/review/patterns.ts` — Monday-anchored `weekRangeFor`/`previousRange`, `computeInsights` (per-type counts vs prior week, confidence mix, recurring themes, `ReviewPattern[]`), `summaryText` digest for the coach.
+  - AI: `ReviewDigest` type + `reviewUser` prompt builder (`src/ai/prompts.ts`) — coach spots cross-week patterns, still no grading.
+  - UI (modular, <300 lines): `WeeklyReviewScreen` (`/review`, week stepper + reflection editor), `src/review/PatternList.tsx` (count tiles + pattern cards + theme chips). Reused `ui.tsx` + `CoachPanel`.
+  - Wired route `/review` + nav "Weekly Review".
+  - Validation: `npm run build` passes (tsc strict + vite, 52 modules); SW precaches 5 entries (436.72 KiB); `npm run preview` → HTTP 200.
+  - **Phase 5: COMPLETE.** Stopped for approval. Pending: founder browser smoke-test.
