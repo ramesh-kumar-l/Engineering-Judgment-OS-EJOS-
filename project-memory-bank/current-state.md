@@ -7,7 +7,7 @@
 Phase 6 — Cognitive Repository — **COMPLETE**. All planned phases (0–6) implemented.
 
 ## Current Sprint
-None active. v1 feature roadmap complete; awaiting founder smoke-test + direction (hardening, tests, icons, or commit).
+None active. v1 feature roadmap complete + first hardening pass done (error boundary, automated tests, PWA icon). Awaiting founder smoke-test + direction (commit to git, or further hardening).
 
 ## Completed Features
 - **Phase 0:** Vision (`01`), Personas (`02`), Architecture (`04`), Design System (`06`).
@@ -69,14 +69,19 @@ None active. v1 feature roadmap complete; awaiting founder smoke-test + directio
 - (none observed; not yet exercised in a real browser end-to-end by the founder)
 
 ## Technical Debt
-- No automated tests yet (manual build + serve validation only).
-- No app icons in PWA manifest (icons array empty) — cosmetic; add before any install/distribution.
-- Zustand installed but not yet used (reserved for cross-screen UI state).
-- System map diagram is read-only (auto-layout); no manual node positioning — intentional for v1 stability.
-- AI Coach responses are not streamed (awaits full completion) — simpler/stable for v1.
+- **Resolved (hardening pass 2026-06-17):**
+  - Automated tests added — Vitest suite over the pure cores (`artifacts.test.ts`, `patterns.test.ts`), 15 tests; `npm test` green. Test files excluded from `tsc -b` build.
+  - Top-level `ErrorBoundary` (`src/components/ErrorBoundary.tsx`) wraps the router — a screen crash now shows recovery UI instead of white-screening the offline app.
+  - PWA icon added (`public/icon.svg`, scalable SVG) — manifest `icons` no longer empty; installable.
+- Remaining:
+  - Test coverage is on pure logic only; UI components / repository (Dexie) paths are not yet tested.
+  - Zustand installed but not yet used (reserved for cross-screen UI state).
+  - System map diagram is read-only (auto-layout); no manual node positioning — intentional for v1 stability.
+  - AI Coach responses are not streamed (awaits full completion) — simpler/stable for v1.
+  - Single SVG PWA icon (no dedicated 192/512 PNG or maskable variant) — sufficient for v1 install.
 
 ## Next Recommended Task
-Founder smoke-test (`npm run dev`): open **Cognitive Repository** → search a term → confirm hits across artifact types → **Connect** two artifacts → confirm they appear in the thinking graph → delete a connection. Then decide v1 hardening direction: automated tests, PWA icons, or **commit Phases 0–6 to git** (nothing committed since initial commit).
+Founder smoke-test (`npm run dev`): open **Cognitive Repository** → search a term → confirm hits across artifact types → **Connect** two artifacts → confirm they appear in the thinking graph → delete a connection. Then **commit Phases 0–6 + the hardening pass to git** (nothing committed since initial commit `7442b5a`). Optional further hardening: tests for repository/Dexie paths, dedicated PNG/maskable icons.
 
 ## Last Updated
-2026-06-17 (Phase 6)
+2026-06-17 (hardening pass — error boundary, Vitest tests, PWA icon)

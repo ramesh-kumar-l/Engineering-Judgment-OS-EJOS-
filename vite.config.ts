@@ -19,7 +19,10 @@ export default defineConfig({
         background_color: '#0a0a0a',
         display: 'standalone',
         start_url: '/',
-        icons: [],
+        icons: [
+          // Single scalable SVG — crisp at every size, precached for offline install.
+          { src: 'icon.svg', type: 'image/svg+xml', sizes: 'any', purpose: 'any' },
+        ],
       },
       workbox: {
         // App shell + assets are precached so the app loads fully offline (AD-001).

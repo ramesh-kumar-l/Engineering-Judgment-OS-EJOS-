@@ -59,3 +59,9 @@
   - Wired route `/repository` + nav "Cognitive Repository".
   - Validation: `npm run build` passes (tsc strict + vite, 57 modules); SW precaches 5 entries (445.62 KiB); `npm run preview` → HTTP 200.
   - **Phase 6: COMPLETE.** Stopped for approval. Pending: founder browser smoke-test.
+- **Hardening pass (post-roadmap, production stability):**
+  - Stability: added top-level `ErrorBoundary` (`src/components/ErrorBoundary.tsx`, self-contained — no app imports) wrapping `<RouterProvider>` in `main.tsx`. A render error in any screen now shows a recovery view (reload) instead of white-screening the offline app.
+  - Tests: added **Vitest** (dev dep) + isolated `vitest.config.ts` (node env, `@/` alias) so the prod build pipeline is untouched. Suites over the pure cores: `src/cognitive/artifacts.test.ts` (7) + `src/review/patterns.test.ts` (8) = **15 tests, all green** (`npm test`). Cover search AND-match/sort, ref indexing, title fallback, Monday week math, prior-week counts, open-loop/single-lens/quiet-week detection, no-score invariant. Excluded `src/**/*.test.ts` from `tsc -b` (tsconfig.app.json) — tests aren't shipped.
+  - PWA: created scalable `public/icon.svg`; filled the previously-empty manifest `icons` (`icon.svg`, `image/svg+xml`, purpose any). App is now installable; icon precached for offline.
+  - Validation: `npm test` → 15 passing; `npm run build` → green (tsc strict + vite, **58 modules**); SW precache **7 entries / 447.42 KiB**; `npm run preview` → HTTP 200, `/icon.svg` → 200 `image/svg+xml`.
+  - Surgical/additive: new files + small edits to `main.tsx`, `vite.config.ts`, `package.json`, `tsconfig.app.json`. No working code rewritten. **Stopped for approval.** Pending: founder smoke-test, then git commit.
