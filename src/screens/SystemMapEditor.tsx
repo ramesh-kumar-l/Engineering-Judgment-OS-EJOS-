@@ -4,6 +4,7 @@ import { newId } from '@/domain/types';
 import { saveSystemMap, deleteSystemMap } from '@/db/repository';
 import { Button, Field, ListEditor, ScreenHeader, TextArea, TextInput } from '@/components/ui';
 import { SystemMapDiagram } from '@/components/SystemMapDiagram';
+import { CoachPanel } from '@/components/CoachPanel';
 
 // Detail editor for one System Map. All edits persist immediately (saveSystemMap).
 export function SystemMapEditor({ map, onDeleted }: { map: SystemMap; onDeleted: () => void }) {
@@ -76,6 +77,8 @@ export function SystemMapEditor({ map, onDeleted }: { map: SystemMap; onDeleted:
           placeholder="What surprised you once you saw the structure?"
         />
       </Field>
+
+      <CoachPanel target={{ kind: 'systemMap', data: map }} />
     </div>
   );
 }

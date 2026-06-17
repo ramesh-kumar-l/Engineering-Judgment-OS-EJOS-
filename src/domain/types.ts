@@ -82,6 +82,18 @@ export interface SystemMap {
   updatedAt: Timestamp;
 }
 
+// ---- Phase 3: AI Coach ----
+
+/** The latest coaching note generated for one artifact (one row per artifact). */
+export interface Coaching {
+  id: string; // = the coached artifact's id
+  targetKind: 'problem' | 'decision' | 'systemMap';
+  content: string; // the coach's response (markdown-ish text)
+  provider: string; // which provider produced it (claude | gemini | ollama)
+  model: string;
+  createdAt: Timestamp;
+}
+
 export const todayISO = (): ISODate => {
   const d = new Date();
   const m = String(d.getMonth() + 1).padStart(2, '0');

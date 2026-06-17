@@ -7,6 +7,7 @@ import { SessionScreen } from '@/screens/SessionScreen';
 import { ProblemFramingScreen } from '@/screens/ProblemFramingScreen';
 import { SystemsWorkspaceScreen } from '@/screens/SystemsWorkspaceScreen';
 import { DecisionJournalScreen } from '@/screens/DecisionJournalScreen';
+import { SettingsScreen } from '@/screens/SettingsScreen';
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
       { path: 'framing', element: <ProblemFramingScreen /> },
       { path: 'systems', element: <SystemsWorkspaceScreen /> },
       { path: 'decisions', element: <DecisionJournalScreen /> },
+      { path: 'settings', element: <SettingsScreen /> },
     ],
   },
 ]);

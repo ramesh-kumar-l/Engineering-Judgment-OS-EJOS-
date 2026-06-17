@@ -4,6 +4,7 @@ import { db } from '@/db/database';
 import type { Confidence, Decision } from '@/domain/types';
 import { createDecision, saveDecision, deleteDecision, getOrCreateTodaySession } from '@/db/repository';
 import { Button, Field, ListEditor, ScreenHeader, TextArea, TextInput } from '@/components/ui';
+import { CoachPanel } from '@/components/CoachPanel';
 
 const confidences: Confidence[] = ['low', 'medium', 'high'];
 
@@ -176,6 +177,8 @@ function DecisionEditor({ decision, onDeleted }: { decision: Decision; onDeleted
           </Button>
         </div>
       </div>
+
+      <CoachPanel target={{ kind: 'decision', data: decision }} />
     </div>
   );
 }

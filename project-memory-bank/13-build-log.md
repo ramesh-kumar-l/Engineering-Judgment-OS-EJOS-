@@ -26,3 +26,10 @@
   - Wired route `/systems` + nav entry "Systems Thinking".
   - Validation: `npm run build` passes (tsc strict + vite); SW precaches 5 entries (408 KiB); `npm run preview` → HTTP 200.
   - **Phase 2: COMPLETE.** Stopped for approval. Pending: founder browser smoke-test.
+- **Phase 3 — AI Coach (pluggable LLM):**
+  - Recorded **AD-004** (pluggable LLM: Claude/Gemini online + Ollama offline). R-001 → Mitigated; added R-002 (client-side keys), R-003 (Ollama CORS).
+  - `src/ai/` layer: `types` (LLMProvider/AISettings), `providers/{claude,gemini,ollama,index}`, `prompts` (coach system + per-artifact builders, **no grading**), `coach` (`runCoaching`).
+  - Data: Dexie **v3** adds `settings` (single row) + `coachings` (per-artifact); repo `getAISettings`/`saveAISettings`/`saveCoaching`/`deleteCoaching`.
+  - UI: reusable `CoachPanel` added to Problem / Decision / System Map editors (additive, 1 line each); `SettingsScreen` (`/settings`) with provider picker, keys/models, Ollama URL, Test connection. Nav + route wired.
+  - Validation: `npm run build` passes (tsc strict + vite, 47 modules); SW precaches 5 entries (419 KiB); `npm run preview` → HTTP 200.
+  - **Phase 3: COMPLETE.** Stopped for approval. Pending: founder smoke-test (configure a provider, run coaching, verify offline via Ollama).

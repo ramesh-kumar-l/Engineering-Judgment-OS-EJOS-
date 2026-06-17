@@ -6,6 +6,7 @@ const nav = [
   { to: '/framing', label: 'Problem Framing', end: false },
   { to: '/systems', label: 'Systems Thinking', end: false },
   { to: '/decisions', label: 'Decision Journal', end: false },
+  { to: '/settings', label: 'Settings', end: false },
 ];
 
 export function AppShell() {

@@ -2,6 +2,21 @@
 
 > Append-only record of significant decisions. Newest first.
 
+## AD-004 — Pluggable LLM provider layer (online + offline AI)
+- **Date:** 2026-06-17
+- **Status:** Accepted
+- **Decision:** The AI Coach runs through a single `LLMProvider` interface with swappable backends:
+  - **Online:** **Claude** (Anthropic) or **Gemini** (Google), via an API key the user supplies.
+  - **Offline:** **Ollama** local server (e.g. `qwen3`, `gemma3`) — runs on the user's machine, no network.
+  - The app depends only on the interface (`src/ai/types.ts`); concrete providers live in `src/ai/providers/`. Active provider + keys + models are chosen in Settings and stored locally (Dexie `settings`, single row).
+- **Why:** Honors offline-first (AD-001) for AI too — Ollama makes the coach usable with no internet. Gives the founder choice/cost control and avoids lock-in to one vendor.
+- **Consequences / tradeoffs (flagged):**
+  - **Revises AD-001's "AI is online-only":** AI is now *offline-capable* via Ollama. R-001 downgraded to **Mitigated**.
+  - **Client-side keys (R-002):** Claude/Gemini are called directly from the browser; the key is used client-side. Anthropic needs the `anthropic-dangerous-direct-browser-access` header. Acceptable for a single-device local-first app; revisit if sync/multi-user is added.
+  - **Ollama CORS (R-003):** the browser can only reach Ollama if it's started with `OLLAMA_ORIGINS` allowing the app origin (e.g. `OLLAMA_ORIGINS=*`). Surfaced in Settings + `Test connection`.
+  - Coach **never grades or scores** — it asks questions and surfaces blind spots (design rule preserved in the system prompt).
+- **Detail:** `04-system-architecture.md` (AI adapter), `features/ai-coach.md`.
+
 ## AD-003 — "Authentication" deferred (no cloud accounts in v1)
 - **Date:** 2026-06-16
 - **Status:** Accepted (reversible)

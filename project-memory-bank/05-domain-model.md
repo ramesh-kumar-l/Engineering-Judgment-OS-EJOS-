@@ -54,8 +54,21 @@ Implemented in `src/domain/types.ts` (pure types, no I/O).
 
 `Polarity = 'reinforcing' | 'balancing'` — **no numeric weights** (design rule). Deleting a node prunes connections that reference it.
 
+## AI Coach Entities (Phase 3)
+### Coaching — latest coach note for one artifact (one row per artifact)
+| Field | Type | Notes |
+|-------|------|-------|
+| id | string | = the coached artifact's id |
+| targetKind | 'problem' \| 'decision' \| 'systemMap' | |
+| content | string | coach response text (never a grade/score) |
+| provider / model | string | which LLM produced it |
+| createdAt | epoch ms | |
+
+### AISettings — provider config (single row, id='ai'); see `src/ai/types.ts`
+Stores `provider` (claude \| gemini \| ollama), per-provider API keys + model names, and Ollama base URL. Stored locally only.
+
 ## Future Entities (later phases)
-- `Review` (Phase 5), `Insight` (Phase 3/5).
+- `Review` (Phase 5), `Insight` (cross-artifact, Phase 5).
 
 ## Relationships
 - A `Session` loosely groups the `Problem`s and `Decision`s created that day (via `sessionId`). Artifacts also stand alone in their own lists.

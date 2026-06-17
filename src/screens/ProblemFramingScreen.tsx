@@ -4,6 +4,7 @@ import { db } from '@/db/database';
 import type { Problem } from '@/domain/types';
 import { createProblem, saveProblem, deleteProblem, getOrCreateTodaySession } from '@/db/repository';
 import { Button, Field, ListEditor, ScreenHeader, TextArea, TextInput } from '@/components/ui';
+import { CoachPanel } from '@/components/CoachPanel';
 
 // Problem Framing workspace. Outputs: assumptions, stakeholders, root-cause notes.
 export function ProblemFramingScreen() {
@@ -119,6 +120,8 @@ function ProblemEditor({ problem, onDeleted }: { problem: Problem; onDeleted: ()
           placeholder="Trace the problem to its source…"
         />
       </Field>
+
+      <CoachPanel target={{ kind: 'problem', data: problem }} />
     </div>
   );
 }

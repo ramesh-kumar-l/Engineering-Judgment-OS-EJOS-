@@ -6,9 +6,11 @@ import {
   type Decision,
   type Confidence,
   type SystemMap,
+  type Coaching,
   newId,
   todayISO,
 } from '@/domain/types';
+import { type AISettings, DEFAULT_AI_SETTINGS } from '@/ai/types';
 
 const now = () => Date.now();
 
@@ -114,4 +116,23 @@ export async function saveSystemMap(map: SystemMap): Promise<void> {
 
 export async function deleteSystemMap(id: string): Promise<void> {
   await db.systemMaps.delete(id);
+}
+
+// ---- AI settings (Phase 3) ----
+export async function getAISettings(): Promise<AISettings> {
+  const existing = await db.settings.get('ai');
+  return existing ?? DEFAULT_AI_SETTINGS;
+}
+
+export async function saveAISettings(settings: AISettings): Promise<void> {
+  await db.settings.put({ ...settings, id: 'ai', updatedAt: now() });
+}
+
+// ---- Coaching notes (Phase 3) ----
+export async function saveCoaching(c: Omit<Coaching, 'createdAt'>): Promise<void> {
+  await db.coachings.put({ ...c, createdAt: now() });
+}
+
+export async function deleteCoaching(id: string): Promise<void> {
+  await db.coachings.delete(id);
 }

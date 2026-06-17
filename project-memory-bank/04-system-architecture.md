@@ -16,10 +16,10 @@
 | State | Zustand | Minimal, ergonomic, no boilerplate |
 | Local store | IndexedDB via **Dexie** | Durable on-device source of truth; structured queries |
 | Offline shell | Service Worker (Workbox / Vite PWA plugin) | App loads & runs with no network |
-| AI Coach | **Claude API** (online-only) | Coaching layer added in Phase 3; additive per AD-001 |
+| AI Coach | **Pluggable LLM** — Claude/Gemini (online) or **Ollama** (offline) | Phase 3; AD-004. App depends only on the `LLMProvider` interface |
 | Packaging (future) | Tauri wrapper possible later | Same web codebase → native desktop if/when desired, no rewrite |
 
-> Reversible: if true *offline AI* becomes a requirement, revisit with a small local model. Out of scope for now.
+> Offline AI is now satisfied via the Ollama provider (AD-004), not deferred.
 
 ## High-Level Architecture
 ```
@@ -31,8 +31,8 @@
 ├─────────────────────────────────────────────┤
 │      Local Data Layer (Dexie/IndexedDB)      │  ← SOURCE OF TRUTH (offline)
 ├───────────────┬─────────────────────────────┤
-│ Service Worker│   AI Coach Adapter (online)  │
-│ (offline shell)│  → Claude API, queued/optional│
+│ Service Worker│   LLMProvider (pluggable)    │
+│ (offline shell)│ → Claude/Gemini | Ollama(local)│
 └───────────────┴─────────────────────────────┘
 ```
 
@@ -41,10 +41,12 @@
 - Writes are synchronous-feeling and never depend on network.
 - Schema lives in `architecture/database-schema.md` (drafted in Phase 1).
 
-## AI Coach Integration (online-only, graceful degradation)
-- AI requests run through an adapter that checks connectivity.
-- Offline → request is **queued** and the UI clearly shows "coaching pending (offline)"; the user's manual workflow is never blocked.
-- Online → adapter calls Claude API; responses must carry evidence + reasoning (see `07-ai-coach-framework.md`).
+## AI Coach Integration (pluggable; AD-004 — implemented Phase 3)
+- AI runs through a single `LLMProvider` interface (`src/ai/`); the app never depends on a concrete vendor.
+- **Online:** Claude (Anthropic) or Gemini (Google), via a user-supplied API key (called browser-direct; key stored locally — R-002).
+- **Offline:** Ollama local server (e.g. `qwen3`, `gemma3`) → the coach works with no network (mitigates R-001; needs `OLLAMA_ORIGINS` — R-003).
+- Core manual workflows never block on AI; coaching is additive and persisted per artifact (`coachings`).
+- Coach surfaces blind spots / asks questions; **never grades or scores** (see `07-ai-coach-framework.md`).
 
 ## Sync Strategy (additive, future)
 - v1 is single-device, no sync, no account required.
