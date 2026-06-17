@@ -4,6 +4,7 @@ import { OfflineBadge } from './OfflineBadge';
 const nav = [
   { to: '/', label: 'Today', end: true },
   { to: '/framing', label: 'Problem Framing', end: false },
+  { to: '/systems', label: 'Systems Thinking', end: false },
   { to: '/decisions', label: 'Decision Journal', end: false },
 ];
 

@@ -47,6 +47,41 @@ export interface Decision {
   updatedAt: Timestamp;
 }
 
+// ---- Phase 2: Systems Thinking ----
+
+/** How one part of the system affects another. No numeric weights (design rule). */
+export type Polarity = 'reinforcing' | 'balancing';
+
+/** A part of the system (a variable, actor, component, or force). */
+export interface SystemNode {
+  id: string;
+  label: string;
+}
+
+/** A directed causal link: `fromId` affects `toId`. */
+export interface SystemConnection {
+  id: string;
+  fromId: string;
+  toId: string;
+  polarity: Polarity; // reinforcing (amplifies) | balancing (stabilizes)
+  note: string; // how / why this link exists
+}
+
+/** A System Map artifact — the Phase 2 thinking output. */
+export interface SystemMap {
+  id: string;
+  sessionId?: string; // optional link to the day's session
+  title: string;
+  description: string; // what system are you looking at, and why?
+  nodes: SystemNode[];
+  connections: SystemConnection[];
+  feedbackLoops: string[]; // reinforcing/balancing loops you've spotted
+  leveragePoints: string[]; // where a small change yields a large effect
+  reflection: string; // what the map revealed: second-order effects, surprises
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
 export const todayISO = (): ISODate => {
   const d = new Date();
   const m = String(d.getMonth() + 1).padStart(2, '0');

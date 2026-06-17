@@ -1,12 +1,13 @@
 # Current State
 
 > Always read this file first. Update it after every meaningful change.
+> (This is the project's "active-context" / save-state file.)
 
 ## Current Phase
-Phase 1 — Core Daily Workflow — **COMPLETE** (awaiting approval to start Phase 2)
+Phase 2 — Systems Thinking — **COMPLETE** (awaiting approval to start Phase 3)
 
 ## Current Sprint
-None active. Next: Phase 2 — Systems Thinking (pending approval).
+None active. Next: Phase 3 — AI Coach (pending approval).
 
 ## Completed Features
 - **Phase 0:** Vision (`01`), Personas (`02`), Architecture (`04`), Design System (`06`).
@@ -17,13 +18,19 @@ None active. Next: Phase 2 — Systems Thinking (pending approval).
   - Problem Framing workspace (assumptions, stakeholders, root-cause).
   - Decision Journal (reasoning, confidence, expected/actual outcome, review status).
   - App shell + routing + offline indicator.
+- **Phase 2 — Systems Thinking:**
+  - `SystemMap` entity + Dexie v2 store (`systemMaps`).
+  - Systems Workspace (`/systems`) — master/detail over system maps.
+  - System Maps: parts (nodes), directed causal connections with polarity (reinforcing/balancing — **no numeric weights**), feedback loops, leverage points.
+  - Live read-only SVG diagram (`SystemMapDiagram`) — ring layout, colored directed edges. No drag-drop (stable, deterministic).
+  - Reflection block (what the map revealed; second-order effects).
 
 ## In Progress Features
 - (none)
 
 ## Pending Features
-- Phase 2: Systems Workspace, System Maps, Reflection support
-- Phase 3+: see `10-phase-roadmap.md`
+- Phase 3: AI Coach (Feedback Engine, Coaching Layer, Insight Generation) — online-only, additive.
+- Phase 4+: see `10-phase-roadmap.md`
 
 ## Architecture Decisions
 | ID | Decision | Status |
@@ -42,9 +49,10 @@ None active. Next: Phase 2 — Systems Thinking (pending approval).
 - No automated tests yet (manual build + serve validation only).
 - No app icons in PWA manifest (icons array empty) — cosmetic; add before any install/distribution.
 - Zustand installed but not yet used (reserved for cross-screen UI state).
+- System map diagram is read-only (auto-layout); no manual node positioning — intentional for v1 stability.
 
 ## Next Recommended Task
-Founder smoke-test in a browser (`npm run dev`): create a session, frame a problem, record a decision, reload to confirm persistence, then toggle offline. On approval, begin **Phase 2 — Systems Thinking**.
+Founder smoke-test in a browser (`npm run dev`): build a system map (add parts, connect them, watch the diagram update), then reload to confirm persistence. On approval, begin **Phase 3 — AI Coach**.
 
 ## Last Updated
-2026-06-16
+2026-06-17

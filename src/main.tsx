@@ -5,6 +5,7 @@ import './index.css';
 import { AppShell } from '@/components/AppShell';
 import { SessionScreen } from '@/screens/SessionScreen';
 import { ProblemFramingScreen } from '@/screens/ProblemFramingScreen';
+import { SystemsWorkspaceScreen } from '@/screens/SystemsWorkspaceScreen';
 import { DecisionJournalScreen } from '@/screens/DecisionJournalScreen';
 
 const router = createBrowserRouter([
@@ -14,6 +15,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <SessionScreen /> },
       { path: 'framing', element: <ProblemFramingScreen /> },
+      { path: 'systems', element: <SystemsWorkspaceScreen /> },
       { path: 'decisions', element: <DecisionJournalScreen /> },
     ],
   },

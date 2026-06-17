@@ -5,6 +5,7 @@ import {
   type Problem,
   type Decision,
   type Confidence,
+  type SystemMap,
   newId,
   todayISO,
 } from '@/domain/types';
@@ -85,4 +86,32 @@ export async function saveDecision(decision: Decision): Promise<void> {
 
 export async function deleteDecision(id: string): Promise<void> {
   await db.decisions.delete(id);
+}
+
+// ---- System Maps (Phase 2) ----
+export async function createSystemMap(sessionId?: string): Promise<string> {
+  const id = newId();
+  const map: SystemMap = {
+    id,
+    sessionId,
+    title: '',
+    description: '',
+    nodes: [],
+    connections: [],
+    feedbackLoops: [],
+    leveragePoints: [],
+    reflection: '',
+    createdAt: now(),
+    updatedAt: now(),
+  };
+  await db.systemMaps.add(map);
+  return id;
+}
+
+export async function saveSystemMap(map: SystemMap): Promise<void> {
+  await db.systemMaps.put({ ...map, updatedAt: now() });
+}
+
+export async function deleteSystemMap(id: string): Promise<void> {
+  await db.systemMaps.delete(id);
 }

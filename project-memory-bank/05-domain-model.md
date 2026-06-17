@@ -38,8 +38,24 @@ Implemented in `src/domain/types.ts` (pure types, no I/O).
 | status | 'open'\|'reviewed' | |
 | createdAt / updatedAt | epoch ms | |
 
+## Systems Thinking Entities (Phase 2)
+### SystemMap — a model of parts and how they affect each other
+| Field | Type | Notes |
+|-------|------|-------|
+| id | string | |
+| sessionId | string? | optional link to the day's session |
+| title, description | string | system + its boundary |
+| nodes | `SystemNode[]` | `{ id, label }` — each part carries a stable id |
+| connections | `SystemConnection[]` | `{ id, fromId, toId, polarity, note }` directed causal links |
+| feedbackLoops | string[] | reinforcing / balancing loops spotted |
+| leveragePoints | string[] | where a small change → large effect |
+| reflection | string | what the map revealed (second-order effects) |
+| createdAt / updatedAt | epoch ms | |
+
+`Polarity = 'reinforcing' | 'balancing'` — **no numeric weights** (design rule). Deleting a node prunes connections that reference it.
+
 ## Future Entities (later phases)
-- `SystemMap` (Phase 2), `Review` (Phase 5), `Insight` (Phase 3/5).
+- `Review` (Phase 5), `Insight` (Phase 3/5).
 
 ## Relationships
 - A `Session` loosely groups the `Problem`s and `Decision`s created that day (via `sessionId`). Artifacts also stand alone in their own lists.
