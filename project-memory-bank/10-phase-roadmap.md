@@ -8,7 +8,7 @@
 | 3 | AI Coach | Pluggable LLM (Claude/Gemini/Ollama), Coaching Layer, per-artifact Insight | Complete |
 | 4 | Innovation Lab | Assumption challenges, redesign, first-principles | Complete |
 | 5 | Weekly Review | Pattern detection, insights, growth tracking | Complete |
-| 6 | Cognitive Repository | Search, connections, thinking graph | Pending |
+| 6 | Cognitive Repository | Search, connections, thinking graph | Complete |
 
 > Each phase ends with PHASE COMPLETE and STOPs for explicit approval.
 > *Auth re-scoped → AD-003 (no cloud accounts in v1; follows offline-first AD-001).

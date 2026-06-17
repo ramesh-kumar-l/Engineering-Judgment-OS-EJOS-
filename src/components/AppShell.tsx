@@ -8,6 +8,7 @@ const nav = [
   { to: '/decisions', label: 'Decision Journal', end: false },
   { to: '/lab', label: 'Innovation Lab', end: false },
   { to: '/review', label: 'Weekly Review', end: false },
+  { to: '/repository', label: 'Cognitive Repository', end: false },
   { to: '/settings', label: 'Settings', end: false },
 ];
 

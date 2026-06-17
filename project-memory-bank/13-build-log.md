@@ -51,3 +51,11 @@
   - Wired route `/review` + nav "Weekly Review".
   - Validation: `npm run build` passes (tsc strict + vite, 52 modules); SW precaches 5 entries (436.72 KiB); `npm run preview` → HTTP 200.
   - **Phase 5: COMPLETE.** Stopped for approval. Pending: founder browser smoke-test.
+- **Phase 6 — Cognitive Repository:**
+  - Domain: added `ArtifactKind` + `Connection` entity (`src/domain/types.ts`).
+  - Data: Dexie **v6** migration adds `connections` store (`id, fromId, toId, createdAt`); repository `createConnection`/`deleteConnection`. v1–v5 carry forward.
+  - Pure layer (`src/cognitive/artifacts.ts`, no I/O): `collectArtifacts` → uniform `ArtifactRef[]`, `searchArtifacts` (AND-match terms, newest-first), `indexByKey`/`refKey`.
+  - UI (modular, <300 lines): `RepositoryScreen` (`/repository` — search + results + graph + connections), `SearchResults` (presentational, links to workspace), `ThinkingGraph` (read-only SVG ring, color-per-kind, undirected edges), `ConnectionsEditor` (two selects + note → connect; list/delete).
+  - Wired route `/repository` + nav "Cognitive Repository".
+  - Validation: `npm run build` passes (tsc strict + vite, 57 modules); SW precaches 5 entries (445.62 KiB); `npm run preview` → HTTP 200.
+  - **Phase 6: COMPLETE.** Stopped for approval. Pending: founder browser smoke-test.

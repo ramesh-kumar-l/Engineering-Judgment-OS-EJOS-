@@ -9,6 +9,8 @@ import {
   type Coaching,
   type Experiment,
   type Review,
+  type Connection,
+  type ArtifactKind,
   newId,
   todayISO,
 } from '@/domain/types';
@@ -156,6 +158,29 @@ export async function deleteExperiment(id: string): Promise<void> {
 // week does not write a row.
 export async function saveReview(review: Review): Promise<void> {
   await db.reviews.put({ ...review, updatedAt: now() });
+}
+
+// ---- Connections (Phase 6: Cognitive Repository) ----
+// Undirected links the founder draws between two artifacts (the graph edges).
+export async function createConnection(
+  from: { kind: ArtifactKind; id: string },
+  to: { kind: ArtifactKind; id: string },
+  note = '',
+): Promise<void> {
+  const connection: Connection = {
+    id: newId(),
+    fromKind: from.kind,
+    fromId: from.id,
+    toKind: to.kind,
+    toId: to.id,
+    note,
+    createdAt: now(),
+  };
+  await db.connections.add(connection);
+}
+
+export async function deleteConnection(id: string): Promise<void> {
+  await db.connections.delete(id);
 }
 
 // ---- AI settings (Phase 3) ----

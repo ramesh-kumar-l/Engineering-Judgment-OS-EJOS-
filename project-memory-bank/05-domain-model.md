@@ -100,8 +100,17 @@ The technique toggle is non-destructive: switching lenses hides but never delete
 
 Created **lazily** on first edit. Patterns are **recomputed live** from artifacts (`src/review/patterns.ts`, pure) — not stored — so a `Review` holds only the founder's durable reflection. **No numeric scoring** (counts + confidence mix are descriptive only).
 
-## Future Entities (later phases)
-- `Insight` / connection edges (cross-artifact thinking graph, Phase 6).
+## Cognitive Repository Entities (Phase 6)
+### Connection — an undirected link between two artifacts (a thinking-graph edge)
+| Field | Type | Notes |
+|-------|------|-------|
+| id | string | |
+| fromKind / toKind | `ArtifactKind` | `'session' \| 'problem' \| 'decision' \| 'systemMap' \| 'experiment' \| 'review'` |
+| fromId / toId | string | the two linked artifacts' ids |
+| note | string | why they relate (optional) |
+| createdAt | epoch ms | |
+
+The founder draws connections manually — nothing is inferred. `connections` store added in Dexie **v6**. Artifacts are normalized into a uniform `ArtifactRef` (`src/cognitive/artifacts.ts`, pure) for search and the graph. **No numeric scoring.**
 
 ## Relationships
 - A `Session` loosely groups the `Problem`s and `Decision`s created that day (via `sessionId`). Artifacts also stand alone in their own lists.

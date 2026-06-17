@@ -4,10 +4,10 @@
 > (This is the project's "active-context" / save-state file.)
 
 ## Current Phase
-Phase 5 — Weekly Review — **COMPLETE** (awaiting approval to start Phase 6)
+Phase 6 — Cognitive Repository — **COMPLETE**. All planned phases (0–6) implemented.
 
 ## Current Sprint
-None active. Next: Phase 6 — Cognitive Repository (pending approval).
+None active. v1 feature roadmap complete; awaiting founder smoke-test + direction (hardening, tests, icons, or commit).
 
 ## Completed Features
 - **Phase 0:** Vision (`01`), Personas (`02`), Architecture (`04`), Design System (`06`).
@@ -40,13 +40,17 @@ None active. Next: Phase 6 — Cognitive Repository (pending approval).
   - Weekly Review (`/review`) — week stepper, locally-computed patterns, reflection editor.
   - Pattern detection (`src/review/patterns.ts`, pure/offline, **no scores**): per-type counts vs prior week, confidence mix, recurring themes, `ReviewPattern[]` (volume trend, open prediction loops, confidence skew, single-lens, recurring threads, quiet week).
   - `PatternList` presentational view; `CoachPanel` reused (`targetKind` → `review`) over a `summaryText` digest — spots cross-week patterns, never grades.
+- **Phase 6 — Cognitive Repository:**
+  - `Connection` entity + `ArtifactKind` + Dexie **v6** store (`connections`); repository `createConnection`/`deleteConnection`.
+  - Pure normalization/search (`src/cognitive/artifacts.ts`, **no scores**): `collectArtifacts` → uniform `ArtifactRef[]`, `searchArtifacts` (offline AND-match), `indexByKey`/`refKey`.
+  - Cognitive Repository (`/repository`): full-text search across all artifacts, read-only thinking graph (SVG ring, color-per-kind, undirected edges), manual connections editor.
+  - `SearchResults` / `ThinkingGraph` / `ConnectionsEditor` presentational pieces (each <300 lines).
 
 ## In Progress Features
 - (none)
 
 ## Pending Features
-- Phase 6: Cognitive Repository (search, connections, thinking graph).
-- See `10-phase-roadmap.md`.
+- (none) — v1 roadmap (Phases 0–6) complete. See `10-phase-roadmap.md`.
 
 ## Architecture Decisions
 | ID | Decision | Status |
@@ -72,7 +76,7 @@ None active. Next: Phase 6 — Cognitive Repository (pending approval).
 - AI Coach responses are not streamed (awaits full completion) — simpler/stable for v1.
 
 ## Next Recommended Task
-Founder smoke-test (`npm run dev`): open **Weekly Review** → confirm count tiles + patterns reflect this week's artifacts → write a reflection → **Get coaching** → step to a prior week. On approval, begin **Phase 6 — Cognitive Repository**.
+Founder smoke-test (`npm run dev`): open **Cognitive Repository** → search a term → confirm hits across artifact types → **Connect** two artifacts → confirm they appear in the thinking graph → delete a connection. Then decide v1 hardening direction: automated tests, PWA icons, or **commit Phases 0–6 to git** (nothing committed since initial commit).
 
 ## Last Updated
-2026-06-17 (Phase 5)
+2026-06-17 (Phase 6)

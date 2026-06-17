@@ -9,6 +9,7 @@ import { SystemsWorkspaceScreen } from '@/screens/SystemsWorkspaceScreen';
 import { DecisionJournalScreen } from '@/screens/DecisionJournalScreen';
 import { InnovationLabScreen } from '@/screens/InnovationLabScreen';
 import { WeeklyReviewScreen } from '@/screens/WeeklyReviewScreen';
+import { RepositoryScreen } from '@/screens/RepositoryScreen';
 import { SettingsScreen } from '@/screens/SettingsScreen';
 
 const router = createBrowserRouter([
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
       { path: 'decisions', element: <DecisionJournalScreen /> },
       { path: 'lab', element: <InnovationLabScreen /> },
       { path: 'review', element: <WeeklyReviewScreen /> },
+      { path: 'repository', element: <RepositoryScreen /> },
       { path: 'settings', element: <SettingsScreen /> },
     ],
   },

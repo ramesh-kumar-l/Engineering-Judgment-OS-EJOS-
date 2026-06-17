@@ -133,6 +133,30 @@ export interface Review {
   updatedAt: Timestamp;
 }
 
+// ---- Phase 6: Cognitive Repository ----
+
+/** Which kind of artifact a reference or connection points at. */
+export type ArtifactKind =
+  | 'session'
+  | 'problem'
+  | 'decision'
+  | 'systemMap'
+  | 'experiment'
+  | 'review';
+
+/** A manual, undirected link the founder draws between two artifacts — the
+ *  edges of the thinking graph. The repository never invents these; the founder
+ *  decides what relates to what. */
+export interface Connection {
+  id: string;
+  fromKind: ArtifactKind;
+  fromId: string;
+  toKind: ArtifactKind;
+  toId: string;
+  note: string; // why these relate
+  createdAt: Timestamp;
+}
+
 // ---- Phase 3: AI Coach ----
 
 /** The latest coaching note generated for one artifact (one row per artifact). */
