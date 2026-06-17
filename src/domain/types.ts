@@ -82,12 +82,48 @@ export interface SystemMap {
   updatedAt: Timestamp;
 }
 
+// ---- Phase 4: Innovation Lab ----
+
+/** Which lens an experiment is run through. */
+export type LabTechnique = 'assumptions' | 'first-principles' | 'redesign';
+
+/** A belief taken for granted, paired with the move that questions it. */
+export interface AssumptionChallenge {
+  id: string;
+  assumption: string; // the thing currently treated as fixed/true
+  challenge: string; // what if it's false? what breaks, what opens up?
+}
+
+/** An Innovation Lab experiment — the Phase 4 thinking output. */
+export interface Experiment {
+  id: string;
+  sessionId?: string; // optional link to the day's session
+  title: string;
+  technique: LabTechnique; // the primary lens; the editor focuses its section
+  subject: string; // what are you reimagining? the thing under examination
+
+  // Lens: assumption challenges
+  assumptionChallenges: AssumptionChallenge[];
+
+  // Lens: first-principles
+  fundamentals: string[]; // the irreducible truths that must actually hold
+  reconstruction: string; // rebuild from those truths, ignoring convention
+
+  // Lens: redesign
+  constraintsToDrop: string[]; // "sacred" constraints worth questioning
+  reimagined: string; // the bolder alternative if those constraints fell
+
+  insight: string; // what shifted? the breakthrough or the next bet
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+
 // ---- Phase 3: AI Coach ----
 
 /** The latest coaching note generated for one artifact (one row per artifact). */
 export interface Coaching {
   id: string; // = the coached artifact's id
-  targetKind: 'problem' | 'decision' | 'systemMap';
+  targetKind: 'problem' | 'decision' | 'systemMap' | 'experiment';
   content: string; // the coach's response (markdown-ish text)
   provider: string; // which provider produced it (claude | gemini | ollama)
   model: string;

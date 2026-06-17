@@ -67,6 +67,26 @@ Implemented in `src/domain/types.ts` (pure types, no I/O).
 ### AISettings — provider config (single row, id='ai'); see `src/ai/types.ts`
 Stores `provider` (claude \| gemini \| ollama), per-provider API keys + model names, and Ollama base URL. Stored locally only.
 
+> `Coaching.targetKind` now also accepts `'experiment'` (Phase 4).
+
+## Innovation Lab Entities (Phase 4)
+### Experiment — a status-quo-challenging experiment run through one lens
+| Field | Type | Notes |
+|-------|------|-------|
+| id | string | |
+| sessionId | string? | optional link to the day's session |
+| title, subject | string | what's being reimagined |
+| technique | `LabTechnique` | `'assumptions' \| 'first-principles' \| 'redesign'` — the active lens |
+| assumptionChallenges | `AssumptionChallenge[]` | `{ id, assumption, challenge }` pairs |
+| fundamentals | string[] | irreducible truths (first-principles lens) |
+| reconstruction | string | rebuild from fundamentals |
+| constraintsToDrop | string[] | "sacred" constraints to question (redesign lens) |
+| reimagined | string | the bolder alternative |
+| insight | string | what shifted / the next bet |
+| createdAt / updatedAt | epoch ms | |
+
+The technique toggle is non-destructive: switching lenses hides but never deletes the other sections' data. **No numeric scoring** anywhere.
+
 ## Future Entities (later phases)
 - `Review` (Phase 5), `Insight` (cross-artifact, Phase 5).
 

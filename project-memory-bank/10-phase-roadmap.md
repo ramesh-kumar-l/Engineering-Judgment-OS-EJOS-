@@ -6,7 +6,7 @@
 | 1 | Core Daily Workflow | Auth*, Daily Session, Problem Framing, Decision Journal | Complete |
 | 2 | Systems Thinking | Systems Workspace, System Maps, Reflection | Complete |
 | 3 | AI Coach | Pluggable LLM (Claude/Gemini/Ollama), Coaching Layer, per-artifact Insight | Complete |
-| 4 | Innovation Lab | Assumption challenges, redesign, first-principles | Pending |
+| 4 | Innovation Lab | Assumption challenges, redesign, first-principles | Complete |
 | 5 | Weekly Review | Pattern detection, insights, growth tracking | Pending |
 | 6 | Cognitive Repository | Search, connections, thinking graph | Pending |
 

@@ -33,3 +33,12 @@
   - UI: reusable `CoachPanel` added to Problem / Decision / System Map editors (additive, 1 line each); `SettingsScreen` (`/settings`) with provider picker, keys/models, Ollama URL, Test connection. Nav + route wired.
   - Validation: `npm run build` passes (tsc strict + vite, 47 modules); SW precaches 5 entries (419 KiB); `npm run preview` → HTTP 200.
   - **Phase 3: COMPLETE.** Stopped for approval. Pending: founder smoke-test (configure a provider, run coaching, verify offline via Ollama).
+- **Phase 4 — Innovation Lab:**
+  - Domain: added `Experiment`, `LabTechnique`, `AssumptionChallenge` (`src/domain/types.ts`); extended `Coaching.targetKind` with `experiment`.
+  - Data: Dexie **v4** migration adds `experiments` store; repository CRUD (`createExperiment`, `saveExperiment`, `deleteExperiment`).
+  - AI: extended `CoachTarget`/`CoachKind` + added `experimentUser` prompt builder (`src/ai/prompts.ts`) — coach pushes past the status quo, still no grading.
+  - UI (modular, <300 lines): `InnovationLabScreen` (master/detail), `ExperimentEditor` (technique toggle + focused lens section + inline `AssumptionChallengesEditor`). Reused `ui.tsx` + `CoachPanel`.
+  - Three lenses, non-destructive toggle: Challenge assumptions / First principles / Redesign. Shared Subject + Insight.
+  - Wired route `/lab` + nav "Innovation Lab".
+  - Validation: `npm run build` passes (tsc strict + vite, 49 modules); SW precaches 5 entries (426 KiB); `npm run preview` → HTTP 200.
+  - **Phase 4: COMPLETE.** Stopped for approval. Pending: founder browser smoke-test.

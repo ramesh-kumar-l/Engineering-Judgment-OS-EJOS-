@@ -7,6 +7,7 @@ import {
   type Confidence,
   type SystemMap,
   type Coaching,
+  type Experiment,
   newId,
   todayISO,
 } from '@/domain/types';
@@ -116,6 +117,36 @@ export async function saveSystemMap(map: SystemMap): Promise<void> {
 
 export async function deleteSystemMap(id: string): Promise<void> {
   await db.systemMaps.delete(id);
+}
+
+// ---- Experiments (Phase 4: Innovation Lab) ----
+export async function createExperiment(sessionId?: string): Promise<string> {
+  const id = newId();
+  const experiment: Experiment = {
+    id,
+    sessionId,
+    title: '',
+    technique: 'assumptions',
+    subject: '',
+    assumptionChallenges: [],
+    fundamentals: [],
+    reconstruction: '',
+    constraintsToDrop: [],
+    reimagined: '',
+    insight: '',
+    createdAt: now(),
+    updatedAt: now(),
+  };
+  await db.experiments.add(experiment);
+  return id;
+}
+
+export async function saveExperiment(experiment: Experiment): Promise<void> {
+  await db.experiments.put({ ...experiment, updatedAt: now() });
+}
+
+export async function deleteExperiment(id: string): Promise<void> {
+  await db.experiments.delete(id);
 }
 
 // ---- AI settings (Phase 3) ----

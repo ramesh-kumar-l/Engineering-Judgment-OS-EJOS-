@@ -1,12 +1,13 @@
-import type { Problem, Decision, SystemMap } from '@/domain/types';
+import type { Problem, Decision, SystemMap, Experiment } from '@/domain/types';
 import type { ChatMessage } from './types';
 
-export type CoachKind = 'problem' | 'decision' | 'systemMap';
+export type CoachKind = 'problem' | 'decision' | 'systemMap' | 'experiment';
 
 export type CoachTarget =
   | { kind: 'problem'; data: Problem }
   | { kind: 'decision'; data: Decision }
-  | { kind: 'systemMap'; data: SystemMap };
+  | { kind: 'systemMap'; data: SystemMap }
+  | { kind: 'experiment'; data: Experiment };
 
 // The coaching philosophy. EJOS coaches judgment — it never grades or scores.
 const COACH_SYSTEM = `You are an engineering judgment coach inside EJOS, a tool that helps engineers think better.
@@ -65,13 +66,37 @@ function systemMapUser(m: SystemMap): string {
   ].join('\n\n');
 }
 
+function experimentUser(e: Experiment): string {
+  const lens = {
+    assumptions: 'challenging assumptions',
+    'first-principles': 'first-principles reasoning',
+    redesign: 'a constraint-dropping redesign',
+  }[e.technique];
+  const pairs = e.assumptionChallenges.map(
+    (a) => `- Assumption: ${a.assumption || '(blank)'} → Challenge: ${a.challenge || '(blank)'}`,
+  );
+  return [
+    `Coach me on this INNOVATION experiment. My primary lens is ${lens}. Push my thinking further — where am I still anchored to the status quo, and what bolder move am I avoiding?`,
+    `Title: ${e.title || '(untitled)'}`,
+    `Subject I'm reimagining: ${e.subject || '(empty)'}`,
+    pairs.length ? `Assumption challenges:\n${pairs.join('\n')}` : 'Assumption challenges: (none)',
+    list('Fundamental truths', e.fundamentals),
+    `Reconstruction from fundamentals: ${e.reconstruction || '(empty)'}`,
+    list('Constraints I might drop', e.constraintsToDrop),
+    `Reimagined alternative: ${e.reimagined || '(empty)'}`,
+    `My insight so far: ${e.insight || '(empty)'}`,
+  ].join('\n\n');
+}
+
 export function buildCoachingMessages(target: CoachTarget): ChatMessage[] {
   const user =
     target.kind === 'problem'
       ? problemUser(target.data)
       : target.kind === 'decision'
         ? decisionUser(target.data)
-        : systemMapUser(target.data);
+        : target.kind === 'systemMap'
+          ? systemMapUser(target.data)
+          : experimentUser(target.data);
   return [
     { role: 'system', content: COACH_SYSTEM },
     { role: 'user', content: user },

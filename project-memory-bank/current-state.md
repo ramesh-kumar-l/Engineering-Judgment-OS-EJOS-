@@ -4,10 +4,10 @@
 > (This is the project's "active-context" / save-state file.)
 
 ## Current Phase
-Phase 3 — AI Coach — **COMPLETE** (awaiting approval to start Phase 4)
+Phase 4 — Innovation Lab — **COMPLETE** (awaiting approval to start Phase 5)
 
 ## Current Sprint
-None active. Next: Phase 4 — Innovation Lab (pending approval).
+None active. Next: Phase 5 — Weekly Review (pending approval).
 
 ## Completed Features
 - **Phase 0:** Vision (`01`), Personas (`02`), Architecture (`04`), Design System (`06`).
@@ -30,13 +30,19 @@ None active. Next: Phase 4 — Innovation Lab (pending approval).
   - `CoachPanel` on every editor (Problem / Decision / System Map); persists latest coaching per artifact.
   - Settings screen (`/settings`): provider picker, keys/models, Ollama URL, Test connection.
   - Dexie **v3**: `settings` + `coachings` stores.
+- **Phase 4 — Innovation Lab:**
+  - `Experiment` entity + Dexie **v4** store (`experiments`).
+  - Innovation Lab (`/lab`) — master/detail over experiments (mirrors Systems workspace).
+  - Three lenses via a non-destructive technique toggle: **Challenge assumptions** (assumption/challenge pairs), **First principles** (fundamental truths → reconstruction), **Redesign** (constraints to drop → reimagined). Shared Subject + Insight fields.
+  - `CoachPanel` reused (coach `targetKind` extended to `experiment`) — coach pushes past the status quo, never grades.
 
 ## In Progress Features
 - (none)
 
 ## Pending Features
-- Phase 4: Innovation Lab (assumption challenges, redesign, first-principles).
-- Phase 5+: see `10-phase-roadmap.md`
+- Phase 5: Weekly Review (pattern detection, insights, growth tracking).
+- Phase 6: Cognitive Repository (search, connections, thinking graph).
+- See `10-phase-roadmap.md`.
 
 ## Architecture Decisions
 | ID | Decision | Status |
@@ -62,7 +68,7 @@ None active. Next: Phase 4 — Innovation Lab (pending approval).
 - AI Coach responses are not streamed (awaits full completion) — simpler/stable for v1.
 
 ## Next Recommended Task
-Founder smoke-test (`npm run dev`): open **Settings**, pick a provider (paste a Claude/Gemini key, or run Ollama with `OLLAMA_ORIGINS=*` + `ollama pull qwen3`), **Test connection**, then open any artifact and click **Get coaching**. On approval, begin **Phase 4 — Innovation Lab**.
+Founder smoke-test (`npm run dev`): open **Innovation Lab** → new experiment → cycle the three lenses → **Get coaching**. (AI setup as in Phase 3: Settings → provider → Test connection.) On approval, begin **Phase 5 — Weekly Review**.
 
 ## Last Updated
-2026-06-17 (Phase 3)
+2026-06-17 (Phase 4)

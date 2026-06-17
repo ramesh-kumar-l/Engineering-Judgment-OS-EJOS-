@@ -7,6 +7,7 @@ import { SessionScreen } from '@/screens/SessionScreen';
 import { ProblemFramingScreen } from '@/screens/ProblemFramingScreen';
 import { SystemsWorkspaceScreen } from '@/screens/SystemsWorkspaceScreen';
 import { DecisionJournalScreen } from '@/screens/DecisionJournalScreen';
+import { InnovationLabScreen } from '@/screens/InnovationLabScreen';
 import { SettingsScreen } from '@/screens/SettingsScreen';
 
 const router = createBrowserRouter([
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
       { path: 'framing', element: <ProblemFramingScreen /> },
       { path: 'systems', element: <SystemsWorkspaceScreen /> },
       { path: 'decisions', element: <DecisionJournalScreen /> },
+      { path: 'lab', element: <InnovationLabScreen /> },
       { path: 'settings', element: <SettingsScreen /> },
     ],
   },
