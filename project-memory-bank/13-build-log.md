@@ -65,3 +65,19 @@
   - PWA: created scalable `public/icon.svg`; filled the previously-empty manifest `icons` (`icon.svg`, `image/svg+xml`, purpose any). App is now installable; icon precached for offline.
   - Validation: `npm test` → 15 passing; `npm run build` → green (tsc strict + vite, **58 modules**); SW precache **7 entries / 447.42 KiB**; `npm run preview` → HTTP 200, `/icon.svg` → 200 `image/svg+xml`.
   - Surgical/additive: new files + small edits to `main.tsx`, `vite.config.ts`, `package.json`, `tsconfig.app.json`. No working code rewritten. **Stopped for approval.** Pending: founder smoke-test, then git commit.
+
+## 2026-06-18
+- **Docs (non-code): onboarding + blog content.**
+  - `Quick_Starter_Guide.md` (repo root) — 14-section first-time-engineer guide (what/why, prereqs, install & scripts, structure + layering, routes, data model, AI Coach setup incl. Ollama `OLLAMA_ORIGINS`, PWA/offline, testing, troubleshooting FAQ, conventions, roadmap). Note: filename intentionally corrected from the requested "Stater" → "Starter".
+  - `blogs/` — 5-post Medium/LinkedIn series on building EJOS (`01` product thesis, `02` offline-first architecture, `03` AI provider abstraction, `04` phase-gated AI-pair process, `05` production hardening) + `blogs/README.md` index. Hiring-signal framing; grounded in real source.
+- **Golden Examples feature (code) — seeded demo data across all 6 screens:**
+  - New data layer module `src/db/seed.ts` (+ `seedData.ejos.ts`, `seedData.fitness.ts`). Lives in the persistence layer like `repository.ts`; UI never touches `db` directly. Exposes `seedGoldenExamples` / `removeGoldenExamples` / `hasGoldenExamples`.
+  - Two complete worked examples, each spanning Problem framing + System map + 3 Decisions + 1 Experiment + 1 Weekly Review + 5 Connections + a Session:
+    - **Example 1 — "Using EJOS on itself"** (week of `2026-06-08`): the real design reasoning behind EJOS, recorded as EJOS artifacts.
+    - **Example 2 — "Android Fitness Tracker"** (week of `2026-06-01`): pre-code system design (sampling leverage point, Doze/WorkManager, just-in-time permissions, Room offline-first).
+  - **Idempotent + labeled + removable:** deterministic `ex-…` ids → `bulkPut` never duplicates; `bulkDelete` removes exactly the seeded rows, never user data. All titles carry an `[Example]` marker. Each example deliberately leaves one Decision prediction **open** so the Weekly Review's open-loop detector fires.
+  - Artifacts dated into specific past weeks so navigating the Weekly Review to those weeks surfaces **real** locally-detected patterns (volume vs prior week, open prediction loops).
+  - UI: `SettingsScreen` gained an "Example data" section — "Load golden examples" / "Remove example data" buttons with loaded-state indicator (only edit to an existing file; additive).
+  - `blogs/case-studies/` — new 3-post case-study series grounded 1:1 in the golden examples (`01` EJOS-on-itself meta study, `02` fitness tracker, `03` synthesis of transferable judgment patterns) + `blogs/README.md` section added.
+  - Validation: `npm run build` → green (tsc strict + vite, **61 modules**); SW precache **7 entries / 469.96 KiB**; `npm test` → **15 passing** (cores unchanged). Runtime click-through (IndexedDB) is the pending founder smoke-test.
+  - Surgical/additive: 3 new `src/db` files + 1 additive edit to `SettingsScreen.tsx`. No working code rewritten, no Dexie schema change (reuses existing v6 stores). **Stopped for approval.** Pending: founder smoke-test, then git commit.

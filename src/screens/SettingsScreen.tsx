@@ -3,6 +3,7 @@ import type { AISettings, ProviderId } from '@/ai/types';
 import { DEFAULT_AI_SETTINGS } from '@/ai/types';
 import { getProvider } from '@/ai/providers';
 import { getAISettings, saveAISettings } from '@/db/repository';
+import { seedGoldenExamples, removeGoldenExamples, hasGoldenExamples } from '@/db/seed';
 import { Button, Field, ScreenHeader, TextInput } from '@/components/ui';
 
 const providers: { id: ProviderId; label: string; note: string }[] = [
@@ -17,9 +18,27 @@ export function SettingsScreen() {
     state: 'idle',
   });
 
+  const [examples, setExamples] = useState<{ loaded: boolean; busy: boolean }>({
+    loaded: false,
+    busy: true,
+  });
+
   useEffect(() => {
     getAISettings().then(setS);
+    hasGoldenExamples().then((loaded) => setExamples({ loaded, busy: false }));
   }, []);
+
+  const loadExamples = async () => {
+    setExamples((e) => ({ ...e, busy: true }));
+    await seedGoldenExamples();
+    setExamples({ loaded: true, busy: false });
+  };
+
+  const clearExamples = async () => {
+    setExamples((e) => ({ ...e, busy: true }));
+    await removeGoldenExamples();
+    setExamples({ loaded: false, busy: false });
+  };
 
   // Save-on-change (local-first, like the rest of the app).
   const update = (patch: Partial<AISettings>) => {
@@ -126,6 +145,28 @@ export function SettingsScreen() {
         Online providers need a network connection. Ollama runs locally, so the coach works fully
         offline.
       </p>
+
+      <div className="mt-2 flex flex-col gap-3 border-t border-[var(--color-border)] pt-6">
+        <Field
+          label="Example data"
+          hint="Two fully worked walkthroughs — building EJOS itself, and designing an Android fitness tracker — across every screen. Clearly labeled “[Example]” and removable anytime."
+        >
+          <div className="flex items-center gap-3">
+            {examples.loaded ? (
+              <Button variant="danger" onClick={clearExamples} disabled={examples.busy}>
+                {examples.busy ? 'Working…' : 'Remove example data'}
+              </Button>
+            ) : (
+              <Button onClick={loadExamples} disabled={examples.busy}>
+                {examples.busy ? 'Working…' : 'Load golden examples'}
+              </Button>
+            )}
+            {examples.loaded && !examples.busy && (
+              <span className="text-sm text-emerald-400">Loaded — explore any screen.</span>
+            )}
+          </div>
+        </Field>
+      </div>
     </div>
   );
 }

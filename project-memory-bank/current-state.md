@@ -7,7 +7,7 @@
 Phase 6 — Cognitive Repository — **COMPLETE**. All planned phases (0–6) implemented.
 
 ## Current Sprint
-None active. v1 feature roadmap complete + first hardening pass done (error boundary, automated tests, PWA icon). Awaiting founder smoke-test + direction (commit to git, or further hardening).
+None active. v1 feature roadmap complete + hardening pass + Golden Examples (seeded demo data) + onboarding/blog docs done. Awaiting founder smoke-test + direction (commit to git, or further hardening).
 
 ## Completed Features
 - **Phase 0:** Vision (`01`), Personas (`02`), Architecture (`04`), Design System (`06`).
@@ -45,6 +45,12 @@ None active. v1 feature roadmap complete + first hardening pass done (error boun
   - Pure normalization/search (`src/cognitive/artifacts.ts`, **no scores**): `collectArtifacts` → uniform `ArtifactRef[]`, `searchArtifacts` (offline AND-match), `indexByKey`/`refKey`.
   - Cognitive Repository (`/repository`): full-text search across all artifacts, read-only thinking graph (SVG ring, color-per-kind, undirected edges), manual connections editor.
   - `SearchResults` / `ThinkingGraph` / `ConnectionsEditor` presentational pieces (each <300 lines).
+- **Golden Examples (post-roadmap, 2026-06-18):**
+  - Seeded demo data module (`src/db/seed.ts` + `seedData.ejos.ts` + `seedData.fitness.ts`) — part of the persistence layer; `seedGoldenExamples`/`removeGoldenExamples`/`hasGoldenExamples`.
+  - Two complete worked examples ("Using EJOS on itself"; "Android Fitness Tracker") spanning all 6 artifact types + connections, dated into past weeks (`2026-06-08`, `2026-06-01`) so the Weekly Review shows real patterns (incl. an intentional open prediction loop).
+  - **Idempotent** (deterministic `ex-…` ids → `bulkPut` no-dupes), **labeled** (`[Example]` title prefix), **removable** (`bulkDelete` touches only seeded rows). No Dexie schema change — reuses v6 stores.
+  - UI: "Example data" section in `SettingsScreen` (Load / Remove buttons). Build: 61 modules; 15 tests still green.
+- **Onboarding & content docs (2026-06-18, non-code):** `Quick_Starter_Guide.md` (root); `blogs/` 5-post build series + index; `blogs/case-studies/` 3-post series grounded in the golden examples.
 
 ## In Progress Features
 - (none)
@@ -81,7 +87,7 @@ None active. v1 feature roadmap complete + first hardening pass done (error boun
   - Single SVG PWA icon (no dedicated 192/512 PNG or maskable variant) — sufficient for v1 install.
 
 ## Next Recommended Task
-Founder smoke-test (`npm run dev`): open **Cognitive Repository** → search a term → confirm hits across artifact types → **Connect** two artifacts → confirm they appear in the thinking graph → delete a connection. Then **commit Phases 0–6 + the hardening pass to git** (nothing committed since initial commit `7442b5a`). Optional further hardening: tests for repository/Dexie paths, dedicated PNG/maskable icons.
+Founder smoke-test (`npm run dev`): **Settings → Load golden examples** → confirm both examples populate across Problem Framing / Systems / Decisions / Innovation Lab → open **Weekly Review** and step back to the weeks of Jun 1 & Jun 8 (confirm detected patterns + the open prediction loop) → open **Cognitive Repository**, search a term, confirm cross-type hits and the thinking graph edges → **Remove example data** → confirm only seeded rows are gone. Then **commit Phases 0–6 + hardening + golden examples + docs to git** (nothing committed since initial commit `7442b5a`). Optional further hardening: tests for repository/Dexie/seed paths, dedicated PNG/maskable icons.
 
 ## Last Updated
-2026-06-17 (hardening pass — error boundary, Vitest tests, PWA icon)
+2026-06-18 (Golden Examples seed feature + onboarding guide + blog series)
